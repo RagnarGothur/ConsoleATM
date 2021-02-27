@@ -8,24 +8,24 @@ namespace ConsoleATM.СashDispensingAlgorithms
     {
         private readonly Random _random = new Random();
 
-        public Dictionary<int, int> Dispense(Dictionary<int, int> cashFullness, int requestedMoney)
+        public Dictionary<int, int> GetDispensing(IDictionary<int, int> cashFullness, int requestedMoney)
         {
             var result = new Dictionary<int, int>();
-            var changes = cashFullness.ToDictionary(e => e.Key, e => e.Value);
+            var cashFulnessCopy = cashFullness.ToDictionary(e => e.Key, e => e.Value);
 
             while (requestedMoney > 0)
             {
-                if (!this.CanDispense(changes, requestedMoney))
+                if (!this.CanDispense(cashFulnessCopy, requestedMoney))
                 {
                     throw new CannotDispenseCashException();
                 }
 
-                var elem = _random.RandomElement(changes);
+                var elem = _random.RandomElement(cashFulnessCopy);
                 if (elem.Key > requestedMoney) continue;
                 if (elem.Value == 0) continue;
 
                 requestedMoney -= elem.Value;
-                changes[elem.Key]--;
+                cashFulnessCopy[elem.Key]--;
 
                 if (result.ContainsKey(elem.Key))
                 {
@@ -36,9 +36,6 @@ namespace ConsoleATM.СashDispensingAlgorithms
                     result[elem.Key] = 1;
                 }
             }
-
-            foreach(var changedEntry in changes)
-                cashFullness[changedEntry.Key] = changedEntry.Value;
 
             return result;
         }

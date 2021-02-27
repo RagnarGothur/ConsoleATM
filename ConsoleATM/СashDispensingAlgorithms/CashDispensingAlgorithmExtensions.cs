@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ConsoleATM.СashDispensingAlgorithms
 {
-    public static class ICashDispensingAlgorithmExtensions
+    public static class CashDispensingAlgorithmExtensions
     {
         public static bool CanDispense(this IСashDispensingAlgorithm algorithm, IDictionary<int, int> moneyFullness, int requestedMoney)
         {
