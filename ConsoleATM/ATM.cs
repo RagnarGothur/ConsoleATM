@@ -13,7 +13,8 @@ namespace ConsoleATM
             = new List<IСashDispensingAlgorithm>()
             {
                 new GreedyСashDispensingAlgorithm(),
-                new UniformСashDispensingAlgorithm()
+                new UniformСashDispensingAlgorithm(),
+                new SingleNominalCashDispensingAlgorithm()
             };
 
         /// <summary>
@@ -25,7 +26,6 @@ namespace ConsoleATM
         {
             5, 20, 50, 100
         };
-        
 
         public ATM(int banknotesNum)
         {

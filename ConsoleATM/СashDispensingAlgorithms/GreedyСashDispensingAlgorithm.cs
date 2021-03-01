@@ -10,7 +10,7 @@ namespace ConsoleATM.СashDispensingAlgorithms
             var sorted = new SortedDictionary<int, int>(
                 cashFullness,
                 Comparer<int>.Create(
-                    (key1, key2) => -key1.CompareTo(key2)
+                    (key1, key2) => -key1.CompareTo(key2) //desc по номиналу
                 )
             );
 
