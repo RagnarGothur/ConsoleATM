@@ -5,7 +5,7 @@ namespace ConsoleATM.СashDispensingAlgorithms
 {
     public class SingleNominalCashDispensingAlgorithm : IСashDispensingAlgorithm
     {
-        public Dictionary<int, int> GetDispensing(IDictionary<int, int> cashFullness, int requestedMoney)
+        public Dictionary<uint, uint> GetDispensing(IDictionary<uint, uint> cashFullness, uint requestedMoney)
         {
             var toDispense = cashFullness
                 .Where(e => e.Value > 0)
@@ -13,7 +13,7 @@ namespace ConsoleATM.СashDispensingAlgorithms
 
             return toDispense.Equals(default)
                 ? throw new CannotDispenseCashException()
-                : new Dictionary<int, int>() { { toDispense.Key, toDispense.Value } };
+                : new Dictionary<uint, uint>() { { toDispense.Key, toDispense.Value } };
         }
     }
 }

@@ -4,6 +4,6 @@ namespace ConsoleATM.СashDispensingAlgorithms
 {
     public interface IСashDispensingAlgorithm
     {
-        public Dictionary<int, int> GetDispensing(IDictionary<int, int> cashFullness, int requestedMoney);
+        public Dictionary<uint, uint> GetDispensing(IDictionary<uint, uint> cashFullness, uint requestedMoney);
     }
 }

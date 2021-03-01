@@ -20,28 +20,28 @@ namespace ConsoleATM
         /// <summary>
         /// Остаток банкнот в банкомате. Сеттер для инкассации
         /// </summary>
-        public Dictionary<int, int> Balance { get; set; }
+        public Dictionary<uint, uint> Balance { get; set; }
 
-        private readonly int[] _default_banknotes = new int[]
+        private readonly uint[] _default_banknotes = new uint[]
         {
             5, 20, 50, 100
         };
 
-        public ATM(int banknotesNum)
+        public ATM(uint banknotesNum)
         {
             Balance = _default_banknotes.ToDictionary(bn => bn, _ => banknotesNum);
         }
 
-        public ATM(Func<Dictionary<int, int>> atmStateCreator)
+        public ATM(Func<Dictionary<uint, uint>> atmStateCreator)
         {
             Balance = atmStateCreator();
         }
 
-        public Dictionary<int, int> DispenseMoney(int requestedCash)
+        public Dictionary<uint, uint> DispenseMoney(uint requestedCash)
         {
             var immutableState = Balance.ToImmutableDictionary();
 
-            var result = new Dictionary<int, int>();
+            var result = new Dictionary<uint, uint>();
             foreach (IСashDispensingAlgorithm algorithm in DispensingAlgorithmPriority)
             {
                 try
@@ -55,7 +55,7 @@ namespace ConsoleATM
                 }
             }
 
-            if (result.Select(e => e.Key * e.Value).Sum() != requestedCash)
+            if (result.Select(e => (int)e.Key * e.Value).Sum() != requestedCash)
             {
                 throw new CannotDispenseCashException();
             }

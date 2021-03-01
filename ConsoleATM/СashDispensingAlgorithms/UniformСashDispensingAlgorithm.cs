@@ -8,9 +8,9 @@ namespace ConsoleATM.СashDispensingAlgorithms
     {
         private readonly Random _random = new Random();
 
-        public Dictionary<int, int> GetDispensing(IDictionary<int, int> cashFullness, int requestedMoney)
+        public Dictionary<uint, uint> GetDispensing(IDictionary<uint, uint> cashFullness, uint requestedMoney)
         {
-            var result = new Dictionary<int, int>();
+            var result = new Dictionary<uint, uint>();
             var cashFulnessCopy = cashFullness.ToDictionary(e => e.Key, e => e.Value);
 
             while (requestedMoney > 0)

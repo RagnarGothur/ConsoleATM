@@ -5,7 +5,11 @@ namespace ConsoleATM.СashDispensingAlgorithms
 {
     public static class CashDispensingAlgorithmExtensions
     {
-        public static bool CanDispense(this IСashDispensingAlgorithm algorithm, IDictionary<int, int> moneyFullness, int requestedMoney)
+        public static bool CanDispense(
+            this IСashDispensingAlgorithm algorithm, 
+            IDictionary<uint, uint> moneyFullness, 
+            uint requestedMoney
+        )
         {
             return moneyFullness.Any(e => e.Key <= requestedMoney && e.Value > 0);
         }

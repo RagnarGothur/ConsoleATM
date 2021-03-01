@@ -4,12 +4,12 @@ namespace ConsoleATM.СashDispensingAlgorithms
 {
     public class GreedyСashDispensingAlgorithm : IСashDispensingAlgorithm
     {
-        public Dictionary<int, int> GetDispensing(IDictionary<int, int> cashFullness, int requestedMoney)
+        public Dictionary<uint, uint> GetDispensing(IDictionary<uint, uint> cashFullness, uint requestedMoney)
         {
-            var result = new Dictionary<int, int>();
-            var sorted = new SortedDictionary<int, int>(
+            var result = new Dictionary<uint, uint>();
+            var sorted = new SortedDictionary<uint, uint>(
                 cashFullness,
-                Comparer<int>.Create(
+                Comparer<uint>.Create(
                     (key1, key2) => -key1.CompareTo(key2) //desc по номиналу
                 )
             );
