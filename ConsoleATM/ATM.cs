@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Text;
 
 namespace ConsoleATM
 {
@@ -21,6 +22,14 @@ namespace ConsoleATM
         /// Остаток банкнот в банкомате. Сеттер для инкассации
         /// </summary>
         public Dictionary<uint, uint> Balance { get; set; }
+        public string BalanceString
+        {
+            get => Balance.Aggregate(
+                new StringBuilder(),
+                (builder, entry) => builder.Append($"\"{entry.Key}\" рублей: {entry.Value} банкнот\n")
+            )
+                .ToString();
+        }
 
         private readonly uint[] _default_banknotes = new uint[]
         {
@@ -37,11 +46,11 @@ namespace ConsoleATM
             Balance = atmStateCreator();
         }
 
-        public Dictionary<uint, uint> DispenseMoney(uint requestedCash)
+        public IDictionary<uint, uint> DispenseMoney(uint requestedCash)
         {
             var immutableState = Balance.ToImmutableDictionary();
 
-            var result = new Dictionary<uint, uint>();
+            IDictionary<uint, uint> result = new Dictionary<uint, uint>();
             foreach (IСashDispensingAlgorithm algorithm in DispensingAlgorithmPriority)
             {
                 try
@@ -49,8 +58,8 @@ namespace ConsoleATM
                     result = algorithm.GetDispensing(immutableState, requestedCash);
                     break;
                 }
-                catch (CannotDispenseCashException) 
-                { 
+                catch (CannotDispenseCashException)
+                {
                     //TODO: log
                 }
             }
@@ -64,6 +73,16 @@ namespace ConsoleATM
                 Balance[d.Key] -= d.Value;
 
             return result;
+        }
+
+        public IDictionary<uint, uint> PutMoney(uint nominal, uint count)
+        {
+            if (!Balance.ContainsKey(nominal))
+                throw new AtmException($"Unexpected nominal {nominal}");
+
+            Balance[nominal] += count;
+
+            return Balance;
         }
     }
 }

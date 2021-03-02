@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleATM": {
+      "commandName": "Project",
+      "commandLineArgs": "500:50 1000:5"
+    }
+  }
+}

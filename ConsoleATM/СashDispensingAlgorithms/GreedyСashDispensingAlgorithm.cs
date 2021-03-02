@@ -4,7 +4,7 @@ namespace ConsoleATM.СashDispensingAlgorithms
 {
     public class GreedyСashDispensingAlgorithm : IСashDispensingAlgorithm
     {
-        public Dictionary<uint, uint> GetDispensing(IDictionary<uint, uint> cashFullness, uint requestedMoney)
+        public IDictionary<uint, uint> GetDispensing(IDictionary<uint, uint> cashFullness, uint requestedMoney)
         {
             var result = new Dictionary<uint, uint>();
             var sorted = new SortedDictionary<uint, uint>(
