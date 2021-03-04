@@ -4,10 +4,189 @@
         <name>ConsoleATM</name>
     </assembly>
     <members>
+        <member name="T:ConsoleATM.ATM">
+            <summary>
+            Банкомат
+            </summary>
+        </member>
+        <member name="P:ConsoleATM.ATM.DispensingAlgorithmPriority">
+            <summary>
+            Очерёдность применения алгоритмов выдачи средств
+            </summary>
+        </member>
         <member name="P:ConsoleATM.ATM.Balance">
             <summary>
             Остаток банкнот в банкомате. Сеттер для инкассации
             </summary>
+        </member>
+        <member name="P:ConsoleATM.ATM.BalanceString">
+            <summary>
+            Баланс в человекочитаемом виде
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.ATM.#ctor(System.UInt32)">
+            <summary>
+            .ctor
+            </summary>
+            <param name="banknotesNum">Количество банкнот всех номиналов</param>
+        </member>
+        <member name="M:ConsoleATM.ATM.#ctor(System.Func{System.Collections.Generic.IDictionary{System.UInt32,System.UInt32}})">
+            <summary>
+            .ctor
+            </summary>
+            <param name="atmStateCreator">Делегат, возвращающий начальный баланс банкомата "номинал:количество купюр"</param>
+        </member>
+        <member name="M:ConsoleATM.ATM.DispenseMoney(System.UInt32)">
+            <summary>
+            Выдать средства
+            </summary>
+            <param name="requestedCash"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleATM.ATM.PutMoney(System.UInt32,System.UInt32)">
+            <summary>
+            Положить средства
+            </summary>
+            <param name="nominal">Номинал</param>
+            <param name="count">Количество</param>
+            <returns></returns>
+        </member>
+        <member name="T:ConsoleATM.AtmException">
+            <summary>
+            Ошибка при операциях банкомата
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.AtmException.#ctor">
+            <summary>
+            .ctor
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.AtmException.#ctor(System.String)">
+            <summary>
+            .ctor
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:ConsoleATM.AtmException.#ctor(System.String,System.Exception)">
+            <summary>
+            .ctor
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:ConsoleATM.CannotDispenseCashException">
+            <summary>
+            Ошибка, возникающая при выдаче средств алгоритмом
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.CannotDispenseCashException.#ctor">
+            <summary>
+            .ctor
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.CannotDispenseCashException.#ctor(System.String)">
+            <summary>
+            .ctor
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:ConsoleATM.CannotDispenseCashException.#ctor(System.String,System.Exception)">
+            <summary>
+            .ctor
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:ConsoleATM.Program">
+            <summary>
+            Программа (точка входа)
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.Program.Main(System.String[])">
+            <summary>
+            Точка входа программы
+            </summary>
+            <param name="programArgs"></param>
+        </member>
+        <member name="T:ConsoleATM.RandomExtensions">
+            <summary>
+            Расширения для класса Random
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.RandomExtensions.RandomElement``1(System.Random,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Достаёт случайный элемент последовательности
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="random"></param>
+            <param name="enumerable"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ConsoleATM.СashDispensingAlgorithms.CashDispensingAlgorithmExtensions">
+            <summary>
+            Расширения для IСashDispensingAlgorithm
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.СashDispensingAlgorithms.CashDispensingAlgorithmExtensions.CanDispense(ConsoleATM.СashDispensingAlgorithms.IСashDispensingAlgorithm,System.Collections.Generic.IDictionary{System.UInt32,System.UInt32},System.UInt32)">
+            <summary>
+            Определяет теоретическую возможность выдачи денег
+            </summary>
+            <param name="algorithm">this</param>
+            <param name="moneyFullness">Баланс</param>
+            <param name="requestedMoney">Запрошено денег</param>
+            <returns></returns>
+        </member>
+        <member name="T:ConsoleATM.СashDispensingAlgorithms.GreedyСashDispensingAlgorithm">
+            <summary>
+            Жадный алгоритм - пытается выдать максимальное число купюр с максимальным номиналом
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.СashDispensingAlgorithms.GreedyСashDispensingAlgorithm.GetDispensing(System.Collections.Generic.IDictionary{System.UInt32,System.UInt32},System.UInt32)">
+            <summary>
+            Получить выдачу
+            </summary>
+            <param name="cashFullness">Баланс банкомата</param>
+            <param name="requestedMoney">Запрошено денег</param>
+            <returns>К выдаче в формате "номинал:количество купюр"</returns>
+        </member>
+        <member name="T:ConsoleATM.СashDispensingAlgorithms.IСashDispensingAlgorithm">
+            <summary>
+            Алгоритм выдачи средств
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.СashDispensingAlgorithms.IСashDispensingAlgorithm.GetDispensing(System.Collections.Generic.IDictionary{System.UInt32,System.UInt32},System.UInt32)">
+            <summary>
+            Получить выдачу
+            </summary>
+            <param name="cashFullness">Баланс банкомата</param>
+            <param name="requestedMoney">Запрошено денег</param>
+            <returns>К выдаче в формате "номинал:количество купюр"</returns>
+        </member>
+        <member name="T:ConsoleATM.СashDispensingAlgorithms.SingleNominalCashDispensingAlgorithm">
+            <summary>
+            Пытается выдать деньги одним номиналом
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.СashDispensingAlgorithms.SingleNominalCashDispensingAlgorithm.GetDispensing(System.Collections.Generic.IDictionary{System.UInt32,System.UInt32},System.UInt32)">
+            <summary>
+            Получить выдачу
+            </summary>
+            <param name="cashFullness">Баланс банкомата</param>
+            <param name="requestedMoney">Запрошено денег</param>
+            <returns>К выдаче в формате "номинал:количество купюр"</returns>
+        </member>
+        <member name="T:ConsoleATM.СashDispensingAlgorithms.UniformСashDispensingAlgorithm">
+            <summary>
+            Пытается выдать деньги случайным образом для равномерного опустошения кассет
+            </summary>
+        </member>
+        <member name="M:ConsoleATM.СashDispensingAlgorithms.UniformСashDispensingAlgorithm.GetDispensing(System.Collections.Generic.IDictionary{System.UInt32,System.UInt32},System.UInt32)">
+            <summary>
+            Получить выдачу
+            </summary>
+            <param name="cashFullness">Баланс банкомата</param>
+            <param name="requestedMoney">Запрошено денег</param>
+            <returns>К выдаче в формате "номинал:количество купюр"</returns>
         </member>
     </members>
 </doc>

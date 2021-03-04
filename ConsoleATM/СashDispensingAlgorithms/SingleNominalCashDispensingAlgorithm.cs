@@ -3,8 +3,17 @@ using System.Linq;
 
 namespace ConsoleATM.СashDispensingAlgorithms
 {
+    /// <summary>
+    /// Пытается выдать деньги одним номиналом
+    /// </summary>
     public class SingleNominalCashDispensingAlgorithm : IСashDispensingAlgorithm
     {
+        /// <summary>
+        /// Получить выдачу
+        /// </summary>
+        /// <param name="cashFullness">Баланс банкомата</param>
+        /// <param name="requestedMoney">Запрошено денег</param>
+        /// <returns>К выдаче в формате "номинал:количество купюр"</returns>
         public IDictionary<uint, uint> GetDispensing(IDictionary<uint, uint> cashFullness, uint requestedMoney)
         {
             var toDispense = cashFullness

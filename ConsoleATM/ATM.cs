@@ -8,8 +8,14 @@ using System.Text;
 
 namespace ConsoleATM
 {
+    /// <summary>
+    /// Банкомат
+    /// </summary>
     public class ATM
     {
+        /// <summary>
+        /// Очерёдность применения алгоритмов выдачи средств
+        /// </summary>
         public List<IСashDispensingAlgorithm> DispensingAlgorithmPriority { get; set; }
             = new List<IСashDispensingAlgorithm>()
             {
@@ -21,7 +27,11 @@ namespace ConsoleATM
         /// <summary>
         /// Остаток банкнот в банкомате. Сеттер для инкассации
         /// </summary>
-        public Dictionary<uint, uint> Balance { get; set; }
+        public IDictionary<uint, uint> Balance { get; set; }
+
+        /// <summary>
+        /// Баланс в человекочитаемом виде
+        /// </summary>
         public string BalanceString
         {
             get => Balance.Aggregate(
@@ -36,16 +46,29 @@ namespace ConsoleATM
             5, 20, 50, 100
         };
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
+        /// <param name="banknotesNum">Количество банкнот всех номиналов</param>
         public ATM(uint banknotesNum)
         {
             Balance = _default_banknotes.ToDictionary(bn => bn, _ => banknotesNum);
         }
 
-        public ATM(Func<Dictionary<uint, uint>> atmStateCreator)
+        /// <summary>
+        /// .ctor
+        /// </summary>
+        /// <param name="atmStateCreator">Делегат, возвращающий начальный баланс банкомата "номинал:количество купюр"</param>
+        public ATM(Func<IDictionary<uint, uint>> atmStateCreator)
         {
             Balance = atmStateCreator();
         }
 
+        /// <summary>
+        /// Выдать средства
+        /// </summary>
+        /// <param name="requestedCash"></param>
+        /// <returns></returns>
         public IDictionary<uint, uint> DispenseMoney(uint requestedCash)
         {
             var immutableState = Balance.ToImmutableDictionary();
@@ -75,6 +98,12 @@ namespace ConsoleATM
             return result;
         }
 
+        /// <summary>
+        /// Положить средства
+        /// </summary>
+        /// <param name="nominal">Номинал</param>
+        /// <param name="count">Количество</param>
+        /// <returns></returns>
         public IDictionary<uint, uint> PutMoney(uint nominal, uint count)
         {
             if (!Balance.ContainsKey(nominal))

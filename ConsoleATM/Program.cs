@@ -6,10 +6,17 @@ using System.Linq;
 
 namespace ConsoleATM
 {
+    /// <summary>
+    /// Программа (точка входа)
+    /// </summary>
     public class Program
     {
         private static ATM _atm;
 
+        /// <summary>
+        /// Точка входа программы
+        /// </summary>
+        /// <param name="programArgs"></param>
         public static void Main(string[] programArgs)
         {
             Log.Logger = CreateSerilogLogger();

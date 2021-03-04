@@ -4,10 +4,19 @@ using System.Linq;
 
 namespace ConsoleATM.СashDispensingAlgorithms
 {
+    /// <summary>
+    /// Пытается выдать деньги случайным образом для равномерного опустошения кассет
+    /// </summary>
     public class UniformСashDispensingAlgorithm : IСashDispensingAlgorithm
     {
         private readonly Random _random = new Random();
 
+        /// <summary>
+        /// Получить выдачу
+        /// </summary>
+        /// <param name="cashFullness">Баланс банкомата</param>
+        /// <param name="requestedMoney">Запрошено денег</param>
+        /// <returns>К выдаче в формате "номинал:количество купюр"</returns>
         public IDictionary<uint, uint> GetDispensing(IDictionary<uint, uint> cashFullness, uint requestedMoney)
         {
             var result = new Dictionary<uint, uint>();
