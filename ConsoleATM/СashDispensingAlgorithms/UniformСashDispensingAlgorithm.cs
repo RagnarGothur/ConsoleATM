@@ -30,8 +30,14 @@ namespace ConsoleATM.СashDispensingAlgorithms
                 }
 
                 var elem = _random.RandomElement(cashFulnessCopy);
-                if (elem.Key > requestedMoney) continue;
-                if (elem.Value == 0) continue;
+                if (elem.Key > requestedMoney || elem.Value == 0)
+                {
+                    cashFulnessCopy = cashFulnessCopy
+                        .Where(e => e.Key <= requestedMoney && elem.Value > 0)
+                        .ToDictionary(e => e.Key, e => e.Value);
+
+                    continue;
+                }
 
                 requestedMoney -= elem.Value;
                 cashFulnessCopy[elem.Key]--;
